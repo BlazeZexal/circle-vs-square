@@ -9,6 +9,78 @@
 // A game about determining superior geometry.
 //
 
-;(function() {
+window.addEventListener('load', function(){
+	document.getElementById('circle-vs-square')
+		.addEventListener('click', function(){
+			new Game();
+		});
+});
+
+var Game = function (){
+	this.c = new Coquette(this, 'circle-vs-square', 800, 600, '#a9a9a9');
+	var squareSettings = {
+		center: {x:200, y:400},
+		size:{x:100, y: 100},
+		color: '#099'
+	};
+
+	var circleSettings = {
+		center: {x : 600, y: 400},
+		size: {x: 100, y: 100},
+		color: "#f07"
+	};
 	
-})();
+	this.c.entities.create(Square, squareSettings);
+	this.c.entities.create(Cricle, circleSettings);
+};
+
+Game.prototype = {
+	
+};
+
+var Cricle = function (game, settings){
+	this.c = game.c;
+	this.center = settings.center;
+	this.size = settings.size;
+	this.color = settings.color;
+};
+
+Cricle.prototype = {
+	update: function(){
+
+	},
+
+	draw: function(ctx){
+		ctx.beginPath();
+		ctx.arc(this.center.x,
+				this.center.y,
+				this.size.x / 2,
+				0,
+				Math.PI * 2,
+				true);
+		ctx.closePath();
+		ctx.strokeStyle = this.color;
+		ctx.stroke();
+	}
+};
+
+var Square = function (game, settings) {
+	this.c = game.c;
+	this.center = settings.center;
+	this.size = settings.size;
+	this.color = settings.color;
+};
+
+Square.prototype = {
+	update: function(){
+
+	},
+
+	draw: function(ctx){
+		ctx.strokeStyle = this.color;
+		ctx.strokeRect(this.center.x - this.size.x / 2,
+					   this.center.y - this.size.y / 2,
+					   this.size.x, this.size.y);
+	}
+};
+	
